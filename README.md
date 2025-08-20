@@ -32,6 +32,10 @@ Here are some decisions I took in the implementation of the projects listed.
 -   A monotonically increasing atomic clock is used as a counter for each process of the application run or restarted
 -   All length constraints not satisfied are padded with zeros to the left
 
+2. Broadcast (Gossiping)
+
+-   Messages are broadcasted to all nodes in the cluster on reception by background workers. I tried gossiping but realized that messages were duplicated since the topology was cyclic. Hopefully I can make this better
+
 ## References
 
 -   [Gossip Glomers](https://fly.io/blog/gossip-glomers)
