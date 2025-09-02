@@ -205,6 +205,7 @@ func Broadcast(node *maelstrom.Node, neighbor string, body any) {
 
 	backOff := 100 * time.Millisecond
 	maxBackoff := 5 * time.Second
+	isSuccess := false
 
 	for {
 		select {
@@ -212,7 +213,12 @@ func Broadcast(node *maelstrom.Node, neighbor string, body any) {
 		case <-ctx.Done():
 			return
 		default:
-			if err := node.RPC(neighbor, body, func(msg maelstrom.Message) error { return nil }); err == nil {
+			// an error can occur within the rpc when it is sent to the destination so a boolean flag is used as the indicator
+			err := node.RPC(neighbor, body, func(msg maelstrom.Message) error {
+				isSuccess = true
+				return nil
+			})
+			if err == nil && isSuccess {
 				return
 			}
 

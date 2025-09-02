@@ -22,7 +22,7 @@ run-unique-ids:
 # broadcast
 run-broadcast:
 	@cd broadcast && go build
-	$(maelstrom) test -w broadcast --bin ./broadcast/broadcast --node-count 5 --time-limit 20 --rate 10
+	$(maelstrom) test -w broadcast --bin ./broadcast/broadcast --node-count 5 --time-limit 20 --rate 10 --nemesis partition
 
 
 # view maelstrom results
